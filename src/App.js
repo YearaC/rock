@@ -1,6 +1,11 @@
-import  {useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import Box from "./component/Box";
+import 'bootstrap/dist/css/bootstrap.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 const choice = {
   rock: {
@@ -19,27 +24,58 @@ const choice = {
 };
 
 function App() {
+  const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
+  const [isInitial, setIsInitial] = useState(true); // 초기화면 상태
   
-  const [userSelect,setUSerSelect] = useState(null);
-
   const play = (userChoice) => {
-    setUSerSelect(choice[userChoice]);
+    setIsInitial(false); // 게임이 시작되면 초기화면 상태가 아님
 
-  }
+    setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+    setResult(judgement(choice[userChoice], computerChoice));
+  };
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice); 
+    console.log("item array", itemArray);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    console.log("random value", randomItem);
+    let final = itemArray[randomItem];
+    return choice[final];
+  };
+  const judgement = (user, computer) => {
+    console.log("user", user, "computer", computer);
+
+
+    if (user.name == computer.name) {
+      return "draw";
+    } else if (user.name == "Rock")
+      return computer.name == "Scissors" ? "win" : "lose";
+    else if (user.name == "Scissors")
+      return computer.name == "Paper" ? "win" : "lose";
+    else if (user.name == "Paper")
+      return computer.name == "Rock" ? "win" : "lose";
+  };
 
   return (
-    <div className="entire">
-      <div className='main'>
-        <Box title="You" item = {userSelect} />
-        {/* <Box title="Computer" /> */}
-      </div>
-      <div className='main'>
-        <button onClick={() => play("rock")}>Rock</button>
-        <button onClick={() => play("scissors")}>Scissors</button>
-        <button onClick={() => play("paper")}>Paper</button>
-      </div>
-    </div>
-
+    <Container className="text-center">
+      <Row className="justify-content-center my-4">
+        <Col xs={12} md={10} lg={6}>
+          <div className="main d-flex flex-column flex-md-row justify-content-center">
+            <Box title="You" item={userSelect} result={result} />
+            <Box title="Computer" item={computerSelect} result={result} />
+          </div>
+          <div className="my-4">
+            <button className="btn btn-primary mx-2" onClick={() => play("scissors")}>가위</button>
+            <button className="btn btn-primary mx-2" onClick={() => play("rock")}>바위</button>
+            <button className="btn btn-primary mx-2" onClick={() => play("paper")}>보</button>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
