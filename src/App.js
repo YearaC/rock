@@ -50,21 +50,22 @@ function App() {
     console.log("user", user, "computer", computer);
 
 
-    if (user.name == computer.name) {
+    if (user.name === computer.name) {
       return "draw";
-    } else if (user.name == "Rock")
-      return computer.name == "Scissors" ? "win" : "lose";
-    else if (user.name == "Scissors")
-      return computer.name == "Paper" ? "win" : "lose";
-    else if (user.name == "Paper")
-      return computer.name == "Rock" ? "win" : "lose";
+    } else if (user.name === "Rock")
+      return computer.name === "Scissors" ? "win" : "lose";
+    else if (user.name === "Scissors")
+      return computer.name === "Paper" ? "win" : "lose";
+    else if (user.name === "Paper")
+      return computer.name === "Rock" ? "win" : "lose";
   };
 
   return (
     <Container className="text-center">
       <Row className="justify-content-center my-4">
         <Col xs={12} md={10} lg={6}>
-          <div className="main d-flex flex-column flex-md-row justify-content-center">
+        <div className={`main d-flex flex-column flex-md-row justify-content-center ${isInitial ? 'initial-padding' : ''}`}>
+
             <Box title="You" item={userSelect} result={result} />
             <Box title="Computer" item={computerSelect} result={result} />
           </div>
