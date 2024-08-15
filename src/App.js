@@ -27,10 +27,10 @@ function App() {
   const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
   const [result, setResult] = useState("");
-  const [isInitial, setIsInitial] = useState(true); // 초기화면 상태
+  const [isInitial, setIsInitial] = useState(true); 
   
   const play = (userChoice) => {
-    setIsInitial(false); // 게임이 시작되면 초기화면 상태가 아님
+    setIsInitial(false); 
 
     setUserSelect(choice[userChoice]);
     let computerChoice = randomChoice();
